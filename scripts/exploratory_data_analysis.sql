@@ -2,14 +2,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 EXPLORATORY DATA ANALYSIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Aim:
-    Explore the structruce of the database
-    Inspect columns and metadata
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
-
+-----------------------------------------------------------
 -- DATABASE EXPLORATION --
+-----------------------------------------------------------
+-- Aim:
+-- 	Explore the structure of the database, including the list of tables and their schemas.
+--	Inspect the columns and metadata for specific tables.
+-----------------------------------------------------------
 --- Explore All Objects in the Database
 SELECT* FROM INFORMATION_SCHEMA.TABLES
 
@@ -20,8 +21,12 @@ SELECT* FROM INFORMATION_SCHEMA.COLUMNS
 SELECT* FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'dim_customers'
 
-
+-----------------------------------------------------------
 -- DIMENSION EXPLORATION --
+-----------------------------------------------------------
+-- Aim:
+-- 	Explore the structure of dimension tables.
+-----------------------------------------------------------
 --- Explore All Countries That Customers are From
 SELECT DISTINCT country FROM gold.dim_customers
 
@@ -36,8 +41,13 @@ ORDER BY category, subcategory
 SELECT DISTINCT category, subcategory, product_name FROM gold.dim_products
 ORDER BY category, subcategory, product_name
 
-
--- DATE EXPLORATION --
+-----------------------------------------------------------
+-- DATE RANGE EXPLORATION --
+-----------------------------------------------------------
+-- Aim:
+-- 	Determine the temporal boundaries of key data points.
+--	Understand the range of historical data.
+-----------------------------------------------------------
 --- First Order, Last Order Dates and Order Range
 SELECT 
 MIN(order_date) as first_order_date, 
@@ -53,8 +63,13 @@ MAX(birth_date) as youngest_birthdate,
 DATEDIFF(year, MAX(birthdate), GETDATE()) As youngest_age
 FROM gold.dim_customers
 
-
+-----------------------------------------------------------
 -- MEASURES EXPLORATION --
+-----------------------------------------------------------
+-- Aim:
+-- 	Calculate aggregated metrics (e.g., totals, averages) for quick insights.
+--	Identify overall trends or spot anomalies.
+-----------------------------------------------------------
 --- Total Sales
 SELECT SUM(sales_amount) as total_sales FROM gold.fact_sales
 
@@ -76,7 +91,7 @@ SELECT COUNT(customer_key) as total_customers FROM gold.dim_customers
 --- Total Number of Customers that Placed an Order
 SELECT COUNT(DISTINCT customer_key) as total_customers FROM gold.fact_sales
 
---- All Key Metrics
+--- All Key Metrics Together
 SELECT 'Total Sales' as measure_name, SUM(sales_amount) as measure_value FROM gold.fact_sales
 UNION ALL
 SELECT 'Total Quantity' as measure_name, SUM(quantity) as measure_value FROM gold.fact_sales
@@ -89,8 +104,13 @@ SELECT 'Total No. of Products' as measure_name, COUNT(DISTINCT product_name) as 
 UNION ALL
 SELECT 'Total No. of Customers' as measure_name, COUNT(customer_key) as measure_value FROM gold.dim_customers
 
-
+-----------------------------------------------------------
 -- MAGNITUTE ANALYSIS --
+-----------------------------------------------------------
+-- Aim:
+-- 	Quantify data and group results by specific dimensions.
+--	Understanding data distribution across categories.
+-----------------------------------------------------------
 --- Total Customers by Countries
 SELECT country, COUNT(customer_key) as total_customers 
 FROM gold.dim_customers
@@ -139,8 +159,13 @@ ON c.customer_key = s.customer_key
 GROUP BY c.country
 ORDER BY total_sold_items DESC
 
-
+-----------------------------------------------------------
 -- RANKING ANALYSIS --
+-----------------------------------------------------------
+-- Aim:
+-- 	Rank items (e.g., products, customers) based on performance or other metrics.
+--	Identify top performers or laggards.
+-----------------------------------------------------------
 --- 5 Products that Generate the Highest Revenue
 SELECT TOP 5 
 p.product_name, SUM(s.sales_amount) as total_revenue
@@ -169,3 +194,21 @@ LEFT JOIN gold.dim_products p
 ON p.product_key = s.product_key
 GROUP BY p.product_name
 ORDER BY total_revenue ASC
+
+--- Top 10 Customers That Generated the Highest Revenue
+SELECT TOP 10
+c.customer_key, c.first_name, c.last_name, SUM(s.sales_amount) AS total_revenue
+FROM gold.fact_sales s
+LEFT JOIN gold.dim_customers c
+ON c.customer_key = s.customer_key
+GROUP BY c.customer_key, c.first_name, c.last_name
+ORDER BY total_revenue DESC
+
+--- 3 Customers That Placed the Lowest Orders
+SELECT TOP 3
+c.customer_key, c.first_name, c.last_name, COUNT(DISTINCT order_number) AS total_orders
+FROM gold.fact_sales s
+LEFT JOIN gold.dim_customers c
+ON c.customer_key = s.customer_key
+GROUP BY c.customer_key, c.first_name, c.last_name
+ORDER BY total_orders 
