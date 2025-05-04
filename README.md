@@ -26,13 +26,13 @@ Advanced analyses include:
 
 ## Report Production
 Customer Report includes:
-    - Essential fields such as names, ages, and transaction details.
-	- Customer category segments such as; (VIP, Regular, New) and age groups.
-    - Customer-level metric aggregates: (total orders, total sales, total quantity purchased, total products, lifespan (in months)
-    - Valuable KPIs: recency (months since last order), average order value, average monthly spend
+- Essential fields such as names, ages, and transaction details.
+- Customer category segments such as; (VIP, Regular, New) and age groups.
+- Customer-level metric aggregates: (total orders, total sales, total quantity purchased, total products, lifespan (in months)
+- Valuable KPIs: recency (months since last order), average order value, average monthly spend
 
 Product Report Includes:
-    - Essential fields such as product name, category, subcategory, and cost.
-	- Product category segments by revenue such as; High-Performers, Mid-Range, or Low-Performers.
-    - Product-level metric aggregates: (total orders, total sales, total quantity sold, total customers (unique), lifespan (in months)
-    - Valuable KPIs: recency (months since last sale), average order revenue, average monthly revenue
+- Essential fields such as product name, category, subcategory, and cost.
+- Product category segments by revenue such as; High-Performers, Mid-Range, or Low-Performers.
+- Product-level metric aggregates: (total orders, total sales, total quantity sold, total customers (unique), lifespan (in months)
+- Valuable KPIs: recency (months since last sale), average order revenue, average monthly revenue
