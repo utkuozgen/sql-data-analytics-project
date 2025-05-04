@@ -8,7 +8,7 @@ This project contains database initialization exploratory data analyses, advance
 - Running the "init_database.sql" script will create the database and import the data (Note: change the directories in the script to your local directories for correct data ingest)
 
 ## Exploratory Analyses
-Exploratory analyses include:
+Exploratory analyses includes:
 - Database exploration
 - Dimension exploration
 - Date range exploration
@@ -17,7 +17,7 @@ Exploratory analyses include:
 - Ranking analysis
 
 ## Advanced Data Analyses
-Advanced analyses include:
+Advanced analyses includes:
 - Change over time analyses
 - Cumulative analyses
 - Performance analyses
@@ -31,7 +31,7 @@ Customer Report includes:
 - Customer-level metric aggregates: (total orders, total sales, total quantity purchased, total products, lifespan (in months)
 - Valuable KPIs: recency (months since last order), average order value, average monthly spend
 
-Product Report Includes:
+Product Report includes:
 - Essential fields such as product name, category, subcategory, and cost.
 - Product category segments by revenue such as; High-Performers, Mid-Range, or Low-Performers.
 - Product-level metric aggregates: (total orders, total sales, total quantity sold, total customers (unique), lifespan (in months)
